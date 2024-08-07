@@ -22,6 +22,7 @@ TCP=$(ss -ta | grep ESTAB | wc -l)
 #The number of server users.
 USERS=$(users | wc -w)
 #The IPv4 address of your server and its MAC (Media Access Control) address.
-IPV4_MAC=$()
+IP=$(hostname -I)
+MAC=$(cat /sys/class/net/enp0s3/adress)
 #The number of commands executed with sudo.
 SUDO=$(journalctl _COMM=sudo | grep COMMAND | wc -l)
