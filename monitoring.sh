@@ -1,8 +1,6 @@
 #! /bin/bash
 #The architecture of the operating system.
-ARCH=$(uname -m)
-#Kernel version
-KERNEL=$(uname -r)
+ARCH=$(uname -a)
 #Physical cores
 CPU_PHYSICAL=$(lscpu | grep "Socket(s):" | awk '{print $2}')
 #Virutal cores
@@ -30,3 +28,17 @@ IP=$(hostname -I)
 MAC=$(cat /sys/class/net/enp0s3/adress)
 #The number of commands executed with sudo.
 SUDO=$(journalctl _COMM=sudo | grep COMMAND | wc -l)
+
+Wall ="
+#Architecture: $ARCH
+#CPU physical: $CPU_PHYSICAL
+#vCPU: $CPU_VIRTUAL
+#Memory Usage: $RAM_USED / ${RAM_TOTAL}MB ($RAM_PERCENT%)
+#Disk Usage: $MEM_TOTAL / $MEM_USED ($MEM_PERCENT)
+#CPU load: $CPU_LOAD
+#Last boot: $LAST_BOOT
+#LVM use: $LVM
+#TCP Connections: $TCP ESTABLISHED
+#User log: $USERS
+#Network: IP $IP ($MAC)
+#Sudo: $SUDO cmd"
