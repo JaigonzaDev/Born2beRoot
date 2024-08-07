@@ -8,11 +8,15 @@ CPU_PHYSICAL=$(lscpu | grep "Socket(s):" | awk '{print $2}')
 #Virutal cores
 CPU_VIRTUAL=$(lscpu | grep "^CPU(s):" | awk '{print $2}')
 #The currently available RAM on your server and its usage percentage
-RAM=$(free --mega | grep )
+RAM_TOTAL=$(free --mega | awk '/Mem:/' | awk '{print $2}')
+RAM_USED=$(free --mega | awk '/Mem:/' | awk '{print $3}')
+RAM_PERCENT=$(echo "scale=2; ($RAM_USED/$RAM_TOTAL)*100" | bc)
 #The currently available memory on your server and its usage as a percentage.
-MEM=
+MEM_USED=$(df -h --total | awk '/total/' | awk '{print $3}')
+MEM_TOTAL=$(df -h --total | awk '/total/' | awk '{print $2}')
+MEM_PERCENT=$(df -h --total | awk '/total/' | awk '{print $5}')
 #The current usage percentage of your cores.
-CPU_LOAD=
+CPU_LOAD=$(top -bn1 | grep "Cpu(s)" | awk -F '[,]' '{print 100 - $4 "%"}')
 #The date and time of the last reboot.
 LAST_BOOT=$(who -b | awk '{print $3, $4}')
 #Whether LVM is active or not.
