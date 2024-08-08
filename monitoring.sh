@@ -3,7 +3,7 @@
 ARCH=$(uname -a)
 #Physical cores
 CPU_PHYSICAL=$(lscpu | grep "Socket(s):" | awk '{print $2}')
-#Virutal cores
+#Virtual cores
 CPU_VIRTUAL=$(lscpu | grep "^CPU(s):" | awk '{print $2}')
 #The currently available RAM on your server and its usage percentage
 RAM_TOTAL=$(free --mega | awk '/Mem:/' | awk '{print $2}')
@@ -25,11 +25,11 @@ TCP=$(ss -ta | grep ESTAB | wc -l)
 USERS=$(users | wc -w)
 #The IPv4 address of your server and its MAC (Media Access Control) address.
 IP=$(hostname -I)
-MAC=$(cat /sys/class/net/enp0s3/adress)
+MAC=$(cat /sys/class/net/enp0s3/address)
 #The number of commands executed with sudo.
 SUDO=$(journalctl _COMM=sudo | grep COMMAND | wc -l)
 
-Wall ="
+wall "
 #Architecture: $ARCH
 #CPU physical: $CPU_PHYSICAL
 #vCPU: $CPU_VIRTUAL
